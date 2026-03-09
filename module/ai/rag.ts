@@ -1,11 +1,14 @@
 import { pineconeIndex } from "@/lib/pinecone";
 import { embed } from "ai";
-import { google } from "@ai-sdk/google";
+import { google, type GoogleEmbeddingModelOptions } from "@ai-sdk/google";
 
 export async function generateEmbedding(text: string) {
   const { embedding } = await embed({
-    model: google.embedding("text-embedding-004"),
+    model: google.embedding("gemini-embedding-001"),
     value: text,
+    providerOptions: {
+      google: { outputDimensionality: 768 } satisfies GoogleEmbeddingModelOptions,
+    },
   });
 
   return embedding;
