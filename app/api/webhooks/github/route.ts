@@ -1,3 +1,4 @@
+import { reviewPullRequest } from "@/module/ai";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -11,7 +12,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Pong" }, { status: 200 });
     }
 
-    // TODO: Handle review events later
+    if (event === "pull_request") {
+      const action = body.action;
+      const repo = body.repository.full_name;
+      const prNumber = body.number;
+      const [owner, repoName] = repo.split("/");
+
+      if (action === "opened" || action === "synchronize") {
+        reviewPullRequest(owner, repoName, prNumber)
+          .then(() => console.log(`Review completed for ${repo} #${prNumber}`))
+          .catch((error: unknown) =>
+            console.error(`Review failed for ${repo} #${prNumber}:`, error),
+          );
+      }
+    }
 
     return NextResponse.json({ message: "Event processed" }, { status: 200 });
   } catch (error) {
