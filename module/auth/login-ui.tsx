@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { signIn } from "@/lib/auth-client";
 import { GithubIcon } from "lucide-react";
 import { useState } from "react";
@@ -53,14 +54,14 @@ const LoginUI = () => {
           </div>
 
           {/* Github Login Button */}
-          <button
+          <Button
             onClick={handleGithubLogin}
             disabled={isLoading}
-            className="w-full py-3 px-4 bg-primary text-black rounded-lg font-semibold hover:bg-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-3 mb-8"
+            className="w-full gap-3 mb-8"
           >
             <GithubIcon size={20} />
             {isLoading ? "Signing in..." : "GitHub"}
-          </button>
+          </Button>
 
           {/* Footer Links */}
           <div className="space-y-4 text-center text-sm text-gray-400">
@@ -73,17 +74,6 @@ const LoginUI = () => {
                 Sign up
               </a>
             </div>
-          </div>
-
-          {/* Bottom Links */}
-          <div className="mt-12 pt-8 border-t border-gray-700 flex justify-center gap-4 text-xs text-gray-500">
-            <a href="#" className="hover:text-gray-400">
-              Terms of Use
-            </a>
-            <span>and</span>
-            <a href="#" className="hover:text-gray-400">
-              Privacy Policy
-            </a>
           </div>
         </div>
       </div>
