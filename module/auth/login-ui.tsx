@@ -1,8 +1,10 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { signIn } from "@/lib/auth-client";
-import { GithubIcon } from "lucide-react";
+import { BrainCircuit, GitGraph, GithubIcon, ShieldAlert, Terminal } from "lucide-react";
 import { useState } from "react";
 
 const LoginUI = () => {
@@ -19,61 +21,92 @@ const LoginUI = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-black to-zinc-900 text-white dark flex">
-      {/* Left */}
-      <div className="flex-1 flex flex-col justify-center px-12 py-16">
-        <div className="max-w-lg">
-          <div className="mb-16">
-            <div className="inline-flex items-center gap-2 text-2xl font-bold">
-              <div className="w-8 h-8 bg-primary rounded-full" />
-              <span>CodeNakama</span>
+    <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="w-full max-w-md">
+        <div className="flex flex-col items-center mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="size-8 bg-white rounded-lg flex items-center justify-center">
+              <Terminal className="text-black size-6" />
             </div>
+            <span className="text-2xl font-bold tracking-tighter">
+              CodeNakama
+            </span>
           </div>
-
-          <h1 className="text-5xl font-bold mb-6 leading-tight text-balance">
-            Cut Code Review Time & Bugs in Half{" "}
-            <span className="block">Instantly.</span>
-          </h1>
-
-          <p className="text-lg text-gray-400 leading-relaxed">
-            Supercharge your team to ship faster with most advanced AI code
-            reviews.
-          </p>
+          <Badge
+            variant="secondary"
+            className="text-[10px] uppercase tracking-widest"
+          >
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            logic-aware AI Review System
+          </Badge>
         </div>
-      </div>
 
-      {/* Right */}
-      <div className="flex-1 flex flex-col justify-center items-center px-12 py-16">
-        <div className="w-full max-w-sm">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold mb-2">Welcome back</h2>
-            <p className="text-gray-400">
-              Login using the following providers:
+        <Card className="rounded-2xl p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-semibold mb-2 tracking-tight">
+              Welcome to CodeNakama
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Connect your GitHub account to start reviewing PRs.
             </p>
           </div>
 
-          <Button
-            onClick={handleGithubLogin}
-            disabled={isLoading}
-            className="w-full gap-3 mb-8"
-          >
-            <GithubIcon size={20} />
-            {isLoading ? "Signing in..." : "GitHub"}
-          </Button>
+          <div className="space-y-4">
+            <Button
+              onClick={handleGithubLogin}
+              disabled={isLoading}
+              className="w-full h-12 font-semibold text-base rounded-xl"
+            >
+              <GithubIcon className="size-5" />
+              {isLoading ? "Signing in..." : "Continue with GitHub"}
+            </Button>
 
-          {/* Footer Links */}
-          <div className="space-y-4 text-center text-sm text-gray-400">
-            <div>
-              New to CodeNakama?{" "}
-              <a
-                href="#"
-                className="text-primary hover:text-muted-foreground font-semibold"
-              >
-                Sign up
-              </a>
+            <p className="text-xs text-center text-muted-foreground px-6">
+              By clicking continue, you agree to our Terms of Service and
+              Privacy Policy.
+            </p>
+          </div>
+
+          <div className="mt-4 pt-8 border-t space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-md border bg-white/5">
+                <BrainCircuit className="size-4 text-purple-500" />
+              </div>
+              <div>
+                <p className="text-xs font-medium">Semantic Logic Analysis</p>
+                <p className="text-xs text-muted-foreground">
+                  Understand codebase context and architectural flaws.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-md border bg-white/5">
+                <GitGraph className="size-4 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-xs font-medium">Architectural Mapping</p>
+                <p className="text-xs text-muted-foreground">
+                  Automated sequence diagrams and logic summaries.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-md border bg-white/5">
+                <ShieldAlert className="size-4 text-emerald-500" />
+              </div>
+              <div>
+                <p className="text-xs font-medium">Smart Issue Detection</p>
+                <p className="text-xs text-muted-foreground">
+                  Find plausible security risks and suggest bug fixes.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </Card>
+
+        <p className="text-center mt-6 text-sm text-muted-foreground">
+          Modern code intelligence for high-stakes engineering teams.
+        </p>
       </div>
     </div>
   );
