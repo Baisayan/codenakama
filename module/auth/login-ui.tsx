@@ -4,7 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { signIn } from "@/lib/auth-client";
-import { BrainCircuit, GitGraph, GithubIcon, ShieldAlert, Terminal } from "lucide-react";
+import {
+  BrainCircuit,
+  GitGraph,
+  GithubIcon,
+  ShieldAlert,
+  Terminal,
+} from "lucide-react";
 import { useState } from "react";
 
 const LoginUI = () => {
@@ -13,7 +19,7 @@ const LoginUI = () => {
   const handleGithubLogin = async () => {
     setIsLoading(true);
     try {
-      await signIn.social({ provider: "github" });
+      await signIn.social({ provider: "github", callbackURL: "/dashboard" });
     } catch (error) {
       console.error("GitHub login failed:", error);
       setIsLoading(false);
@@ -32,10 +38,7 @@ const LoginUI = () => {
               CodeNakama
             </span>
           </div>
-          <Badge
-            variant="secondary"
-            className="text-[10px] uppercase tracking-widest"
-          >
+          <Badge variant="secondary" className="uppercase tracking-wider">
             <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
             logic-aware AI Review System
           </Badge>
@@ -104,8 +107,8 @@ const LoginUI = () => {
           </div>
         </Card>
 
-        <p className="text-center mt-6 text-sm text-muted-foreground">
-          Modern code intelligence for high-stakes engineering teams.
+        <p className="text-center mt-4 text-sm text-muted-foreground">
+          Modern code intelligence for high-stakes teams.
         </p>
       </div>
     </div>
