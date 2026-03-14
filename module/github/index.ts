@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { cache } from "react";
-import { get } from "http";
 
 export const getAuthenticatedUser = cache(async () => {
   const session = await auth.api.getSession({ headers: await headers() });
