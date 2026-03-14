@@ -27,7 +27,6 @@ export const fetchRepositories = async (
   }));
 };
 
-
 export const connectRepository = async (
   owner: string,
   repo: string,
