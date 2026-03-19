@@ -134,11 +134,12 @@ export const deleteWebhook = async (owner: string, repo: string) => {
 };
 
 export async function getRepoFileContents(
+  token: string,
   owner: string,
   repo: string,
   branch: string = "main",
 ): Promise<{ path: string; content: string }[]> {
-  const { octokit } = await getAuthenticatedUser();
+  const octokit = new Octokit({ auth: token });
 
   try {
     const { data: treeData } = await octokit.rest.git.getTree({
@@ -156,7 +157,8 @@ export async function getRepoFileContents(
         ),
     );
 
-    if (files.length > 500) throw new Error("Repo is too large");
+    if (!files || files.length === 0) throw new Error("No files found in repo");
+    if (files.length > 300) throw new Error("Repo too large for indexing");
 
     const results: { path: string; content: string }[] = [];
     const CHUNK_SIZE = 20;
@@ -184,7 +186,10 @@ export async function getRepoFileContents(
 
     return results;
   } catch (error) {
-    throw new Error(`Error fetching repo contents: ${error}`);
+    if (error instanceof Error) throw error;
+    throw new Error(
+      "An unexpected error occurred while fetching repo contents",
+    );
   }
 }
 
