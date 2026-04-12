@@ -45,7 +45,7 @@ export default function Hero() {
 
         <div className="flex items-center gap-4">
           <Button asChild size="lg">
-            <Link href="/dashboard">
+            <Link href="/repository">
               <Github className="size-4" />
               Get Started for Free
             </Link>

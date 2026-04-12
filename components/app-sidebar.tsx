@@ -40,23 +40,18 @@ export const AppSidebar = () => {
 
   const navigationItems = [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: BookOpen,
-    },
-    {
       title: "Repository",
-      url: "/dashboard/repository",
+      url: "/repository",
       icon: Github,
     },
     {
       title: "Reviews",
-      url: "/dashboard/reviews",
+      url: "/reviews",
       icon: Star,
     },
     {
       title: "Settings",
-      url: "/dashboard/settings",
+      url: "/settings",
       icon: Settings,
     },
   ];

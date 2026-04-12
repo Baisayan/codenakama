@@ -20,40 +20,6 @@ export const getAuthenticatedUser = cache(async () => {
   return { session, token: account.accessToken, username: user.login, octokit };
 });
 
-export async function fetchUserContribution(token: string, username: string) {
-  const octokit = new Octokit({ auth: token });
-
-  const query = `
-        query($username: String!) {
-            user(login: $username) {
-                contributionsCollection {
-                    contributionCalendar {
-                        totalContributions
-                        weeks {
-                            contributionDays {
-                                contributionCount
-                                date
-                                color
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `;
-
-  try {
-    const response: any = await octokit.graphql(query, {
-      username,
-    });
-
-    return response.user.contributionsCollection.contributionCalendar;
-  } catch (error) {
-    console.error("Error fetching contribution data:", error);
-    return null;
-  }
-}
-
 export const getRepositories = async (
   page: number = 1,
   perPage: number = 10,
