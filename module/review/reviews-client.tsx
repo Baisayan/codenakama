@@ -44,10 +44,16 @@ export default function ReviewsPage({
               <CardHeader>
                 <div className="flex justify-between">
                   <div className="flex-1">
-                    <CardTitle className="text-lg">{review.prTitle}</CardTitle>
+                    <CardTitle className="text-lg">
+                      PR #{review.prNumber} ⋅ {review.prTitle}
+                    </CardTitle>
                     <CardDescription>
-                      {review.repository.fullName} ⋅ PR #{review.prNumber}
+                      {review.repository.fullName} ⋅{" "}
+                      {formatDistanceToNow(new Date(review.createdAt), {
+                        addSuffix: true,
+                      })}
                     </CardDescription>
+                    <div className="text-sm"></div>
                   </div>
 
                   <Button variant="ghost" size="icon" asChild>
@@ -61,20 +67,6 @@ export default function ReviewsPage({
                   </Button>
                 </div>
               </CardHeader>
-
-              <CardContent className="space-y-4">
-                <div className="text-sm text-muted-foreground">
-                  {formatDistanceToNow(new Date(review.createdAt), {
-                    addSuffix: true,
-                  })}
-                </div>
-                <div className="bg-muted p-4 rounded-lg">
-                  <p className="whitespace-pre-wrap text-xs">
-                    {review.review.substring(0, 300)}
-                    ....
-                  </p>
-                </div>
-              </CardContent>
             </Card>
           ))}
         </div>

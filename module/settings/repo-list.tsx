@@ -25,14 +25,17 @@ import {
 import {
   disconnectRepository,
   disconnectAllRepositories,
-  getSettingsPageData,
 } from "./";
 
-type Repo = NonNullable<
-  Awaited<ReturnType<typeof getSettingsPageData>>["repositories"]
->[number];
+export interface ConnectedRepo {
+  id: string;
+  name: string;
+  fullName: string;
+  url: string;
+  createdAt: Date;
+}
 
-export function RepositoryList({ initialRepos }: { initialRepos: Repo[] }) {
+export function RepositoryList({ initialRepos }: { initialRepos: ConnectedRepo[] }) {
   const disconnectMutation = useMutation({
     mutationFn: disconnectRepository,
     onSuccess: () => toast.success("Repository disconnected."),

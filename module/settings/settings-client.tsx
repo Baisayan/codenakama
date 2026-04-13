@@ -1,6 +1,5 @@
 "use client";
 
-import { ProfileForm } from "./profile-form";
 import { RepositoryList } from "./repo-list";
 import { getSettingsPageData } from "@/module/settings";
 
@@ -16,11 +15,10 @@ export default function SettingsPageClient({
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">
-          Manage your account settings and connected repositories.
+          Manage your connected repositories.
         </p>
       </div>
 
-      <ProfileForm initialUser={initialData.user!} />
       <RepositoryList initialRepos={initialData.repositories} />
     </div>
   );

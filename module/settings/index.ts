@@ -8,18 +8,7 @@ export async function getSettingsPageData() {
   try {
     const { session } = await getAuthenticatedUser();
 
-    const [user, repositories] = await Promise.all([
-      prisma.user.findUnique({
-        where: { id: session.user.id },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          image: true,
-          createdAt: true,
-        },
-      }),
-      prisma.repository.findMany({
+    const repositories = await prisma.repository.findMany({
         where: { userId: session.user.id },
         select: {
           id: true,
@@ -29,34 +18,12 @@ export async function getSettingsPageData() {
           createdAt: true,
         },
         orderBy: { createdAt: "desc" },
-      }),
-    ]);
+      });
 
-    return { user, repositories };
+    return { repositories };
   } catch (error) {
     console.error("Settings data fetch failed:", error);
-    return { user: null, repositories: [] };
-  }
-}
-
-export async function updateUserProfile(data: {
-  name?: string;
-  email?: string;
-}) {
-  try {
-    const { session } = await getAuthenticatedUser();
-
-    const updatedUser = await prisma.user.update({
-      where: { id: session.user.id },
-      data: { name: data.name, email: data.email },
-      select: { id: true, name: true, email: true },
-    });
-
-    revalidatePath("/dashboard/settings");
-    return { success: true, user: updatedUser };
-  } catch (error) {
-    console.error("Error updating user profile:", error);
-    return { success: false, error: "Update failed" };
+    return { repositories: [] };
   }
 }
 
