@@ -76,9 +76,6 @@ Analyze the code specifically for:
 ## Issues & Improvements
 [List critical bugs, security risks, or code smells. Use code blocks for suggested fixes.]
 
-## Suggestions
-[Non-critical ideas for better readability or future-proofing.]
-
 Keep the response concise, practical, and grounded in the provided code.`;
 
       const { text } = await generateText({
