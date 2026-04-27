@@ -8,28 +8,21 @@ Built to demonstrate real-world backend engineering with event-driven systems, R
 
 ## Features
 
-* 🔐 Secure authentication using Better Auth with GitHub OAuth (supports both public and private repositories)
+* Secure authentication using Better Auth with GitHub OAuth (supports both public and private repositories)
 
 * Seamless GitHub integration using Octokit and GraphQL APIs to fetch repositories, PRs, commits, and contribution data
 
-* ⚡ Event-driven Automated PR review triggered by GitHub webhooks (handles both PR opened and synchronize events)
+* Event-driven Automated PR review triggered by GitHub webhooks (handles both PR opened and synchronize events)
 
-* 🧠 Context-aware AI reviews powered by RAG over the entire codebase
+* Context-aware AI reviews powered by RAG over the entire codebase
 
 * Repository-wide indexing using Pinecone vector database with background workers via Inngest
 
-* 🔄 Multi-step background workflows (Inngest) for indexing and PR review pipelines
+* Multi-step background workflows (Inngest) for indexing and PR review pipelines
 
 * AI-generated reviews posted directly on GitHub pull requests and saved in Database to view from app
 
-* 📊 Developer dashboard showing:
-
-  * Connected repositories (public & private)
-  * Pull requests and commits
-  * Contribution graphs
-  * AI review history
-
-* 🧩 Supports multiple repositories per user with independent indexing and review pipelines
+* Supports multiple repos per user with independent indexing and review pipelines
 
 
 ## Architecture
@@ -89,10 +82,3 @@ ngrok http 3000
 * Deployed on Vercel
 * Inngest configured with production event keys
 * GitHub webhooks updated to production URL
-
-## Planned Improvements
-
-* Chunk-based indexing instead of full-file embeddings
-* Incremental repo indexing
-* Smarter retrieval (reranking, filtering)
-* Large files are truncated before indexing, need to fix that

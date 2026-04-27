@@ -9,16 +9,16 @@ export async function getSettingsPageData() {
     const { session } = await getAuthenticatedUser();
 
     const repositories = await prisma.repository.findMany({
-        where: { userId: session.user.id },
-        select: {
-          id: true,
-          name: true,
-          fullName: true,
-          url: true,
-          createdAt: true,
-        },
-        orderBy: { createdAt: "desc" },
-      });
+      where: { userId: session.user.id },
+      select: {
+        id: true,
+        name: true,
+        fullName: true,
+        url: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
 
     return { repositories };
   } catch (error) {
@@ -44,7 +44,9 @@ export async function disconnectRepository(repositoryId: string) {
       }),
     ]);
 
-    revalidatePath("/dashboard", "layout");
+    revalidatePath("/repository", "page");
+    revalidatePath("/settings", "page");
+    revalidatePath("/reviews", "page");
     return { success: true };
   } catch (error) {
     console.error("Error disconnecting repository:", error);
@@ -70,7 +72,9 @@ export async function disconnectAllRepositories() {
       where: { userId: session.user.id },
     });
 
-    revalidatePath("/dashboard", "layout");
+    revalidatePath("/repository", "page");
+    revalidatePath("/settings", "page");
+    revalidatePath("/reviews", "page");
     return { success: true, count: result.count };
   } catch (error) {
     console.error("Error disconnecting all repos:", error);

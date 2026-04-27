@@ -22,7 +22,7 @@ export const requireUnAuth = async () => {
   });
 
   if (session) {
-    redirect("/dashboard");
+    redirect("/repository");
   }
 
   return session;
