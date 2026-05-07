@@ -34,7 +34,7 @@ export default function Hero() {
         </Badge>
 
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 max-w-4xl bg-linear-to-b from-white to-white/40 bg-clip-text text-transparent">
-          Code reviews that catch what human's miss
+          Code reviews that catch what human&apos;s miss
         </h1>
 
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-2 mb-10 tracking-wide">
@@ -47,9 +47,11 @@ export default function Hero() {
           <Button asChild size="lg">
             <Link href="/repository">Get Started for Free</Link>
           </Button>
-          <Button variant="outline" size="lg">
-            <Github className="size-4" />
-            View in GitHub
+          <Button variant="outline" size="lg" asChild>
+            <Link href="https://github.com/Baisayan/codenakama">
+              <Github className="size-4" />
+              View in GitHub
+            </Link>
           </Button>
         </div>
       </main>

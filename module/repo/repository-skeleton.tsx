@@ -19,11 +19,6 @@ export function RepositoryCardSkeleton() {
           </div>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-4">
-          <Skeleton className="h-4 w-16" />
-        </div>
-      </CardContent>
     </Card>
   );
 }

@@ -2,20 +2,19 @@
 
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ExternalLink, Star, Search, Loader2 } from "lucide-react";
+import { ExternalLink, Loader2, Search } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRepositories } from "@/module/repo/use-repos";
 import { RepositoryListSkeleton } from "@/module/repo/repository-skeleton";
 import { useConnectRepository } from "@/module/repo/use-connect-repository";
 import { fetchRepositories } from "@/module/repo";
+import { Input } from "@/components/ui/input";
 
 type Repo = Awaited<ReturnType<typeof fetchRepositories>>[number];
 
@@ -46,9 +45,8 @@ const RepositoryPageClient = () => {
           fetchNextPage();
         }
       },
-      { threshold: 0.5 },
+      { threshold: 0 },
     );
-
     observer.observe(target);
     return () => observer.disconnect();
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
@@ -171,19 +169,6 @@ const RepositoryPageClient = () => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  <Star className="size-4 text-primary" fill="#ffe0c2" />
-                  {repo.stargazers_count}
-                </div>
-                <div className="flex gap-2">
-                  {repo.topics?.slice(0, 3).map((topic) => (
-                    <span key={topic}>#{topic}</span>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
           </Card>
         ))}
       </div>

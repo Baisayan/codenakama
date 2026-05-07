@@ -22,7 +22,7 @@ export const getAuthenticatedUser = cache(async () => {
 
 export const getRepositories = async (
   page: number = 1,
-  perPage: number = 10,
+  perPage: number = 20,
 ) => {
   const { octokit } = await getAuthenticatedUser();
 
@@ -124,10 +124,10 @@ export async function getRepoFileContents(
     );
 
     if (!files || files.length === 0) throw new Error("No files found in repo");
-    if (files.length > 300) throw new Error("Repo too large for indexing");
+    if (files.length > 500) throw new Error("Repo too large for indexing");
 
     const results: { path: string; content: string }[] = [];
-    const CHUNK_SIZE = 20;
+    const CHUNK_SIZE = 15;
 
     for (let i = 0; i < files.length; i += CHUNK_SIZE) {
       const chunk = files.slice(i, i + CHUNK_SIZE);

@@ -2,34 +2,39 @@ import { reviewPullRequest } from "@/module/ai";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const event = request.headers.get("x-github-event");
+  const body = await request.json();
+  const event = request.headers.get("x-github-event");
 
-    console.log(`Received GitHub event: ${event}`);
+  try {
+    if (!event) {
+      return NextResponse.json({ error: "Missing event" }, { status: 400 });
+    }
 
     if (event === "ping") {
       return NextResponse.json({ message: "Pong" }, { status: 200 });
     }
 
     if (event === "pull_request") {
-      const action = body.action;
-      const repo = body.repository.full_name;
-      const prNumber = body.number;
+      const { action, repo, number } = body;
       const [owner, repoName] = repo.split("/");
 
-      if (action === "opened" || action === "synchronize") {
-        reviewPullRequest(owner, repoName, prNumber)
-          .then(() => console.log(`Review completed for ${repo} #${prNumber}`))
-          .catch((error: unknown) =>
-            console.error(`Review failed for ${repo} #${prNumber}:`, error),
-          );
+      if (!repo?.full_name || !number) {
+        return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+      }
+
+      if (action === "opened") {
+        reviewPullRequest(owner, repoName, number).catch(
+          (error: unknown) =>
+            console.error(`Review failed for ${repo} #${number}:`, error),
+        );
+
+        console.log(`Review completed for ${repo.full_name} #${number}`);
       }
     }
 
-    return NextResponse.json({ message: "Event processed" }, { status: 200 });
+    return NextResponse.json({ message: "Event processed" });
   } catch (error) {
-    console.error("Error processing webhook:", error);
+    console.error("Webhook error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
